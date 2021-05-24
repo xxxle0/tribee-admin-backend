@@ -10,7 +10,7 @@ import (
 
 var Db *sqlx.DB
 
-func findAll() ([]models.User, error) {
+func FindAll() ([]models.User, error) {
 	result := []models.User{}
 	rows, err := Db.Query(`SELECT * FROM Users`)
 	defer rows.Close()
@@ -25,9 +25,18 @@ func findAll() ([]models.User, error) {
 	return result, nil
 }
 
-func findById(id string) (models.User, error) {
+func FindById(id string) (models.User, error) {
 	user := models.User{}
 	err := Db.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
+	if err != nil {
+		return user, errors.Wrap(err, "unable to get hour from db")
+	}
+	return user, nil
+}
+
+func FindByEmail(email string) (models.User, error) {
+	user := models.User{}
+	err := Db.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
 	if err != nil {
 		return user, errors.Wrap(err, "unable to get hour from db")
 	}
