@@ -4,10 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(router *gin.Engine) {
+func SetupAdminRoutes(router *gin.Engine) {
 	api := router.Group("/api")
 	{
-
 		v1 := api.Group("/v1")
 		{
 			admin := v1.Group("/admin")
@@ -18,7 +17,6 @@ func SetupRoutes(router *gin.Engine) {
 					})
 				})
 			}
-
 		}
 	}
 }
