@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/xxxle0/tribee-admin-backend/controllers"
 )
 
 func SetupAdminRoutes(router *gin.Engine) {
@@ -11,11 +12,7 @@ func SetupAdminRoutes(router *gin.Engine) {
 		{
 			admin := v1.Group("/admin")
 			{
-				admin.GET("/ping", func(c *gin.Context) {
-					c.JSON(200, gin.H{
-						"message": "pong",
-					})
-				})
+				admin.GET("/ping", controllers.AdminController)
 			}
 		}
 	}
