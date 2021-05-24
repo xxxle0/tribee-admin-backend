@@ -5,5 +5,5 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine) {
-	SetupAdminRoutes(router)
+	AdminRoutes(router)
 }

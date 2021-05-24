@@ -11,3 +11,10 @@ func AdminController(c *gin.Context) {
 		"message": "pong",
 	})
 }
+
+func SignInController(c *gin.Context) {
+	services.SignIn()
+	c.JSON(200, gin.H{
+		"message": "pong",
+	})
+}
