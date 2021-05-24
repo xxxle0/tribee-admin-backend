@@ -1,15 +1,12 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/xxxle0/tribee-admin-backend/routes"
+)
 
 func main() {
 	router := gin.Default()
-	// Refactor Routes Group
-	routes.setupRoutes(router)
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	routes.SetupRoutes(router)
 	router.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
