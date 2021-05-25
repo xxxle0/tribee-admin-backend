@@ -5,6 +5,5 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine) {
-	PrivateRoutes(router)
 	AdminRoutes(router)
 }
