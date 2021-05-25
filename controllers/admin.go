@@ -9,7 +9,7 @@ import (
 
 func AdminController(c *gin.Context) {
 	services.AdminSerice()
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})
 }
@@ -26,7 +26,7 @@ func SignInController(c *gin.Context) {
 		return
 	}
 	services.SignIn(signInBody.Email, signInBody.Password)
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})
 }
