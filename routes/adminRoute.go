@@ -6,15 +6,13 @@ import (
 )
 
 func AdminRoutes(router *gin.Engine) {
-	api := router.Group("/api")
+	apiV1 := router.Group("/api/v1")
 	{
-		v1 := api.Group("/v1")
+		admin := apiV1.Group("/admin")
 		{
-			admin := v1.Group("/admin")
-			{
-				admin.GET("/ping", controllers.AdminController)
-				admin.POST("/sign-in", controllers.SignInController)
-			}
+			admin.GET("/ping", controllers.AdminController)
+			admin.POST("/sign-in", controllers.SignIn)
+			admin.POST("/sign-up", controllers.SignIn)
 		}
 	}
 }

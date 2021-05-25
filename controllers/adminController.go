@@ -19,7 +19,7 @@ type SignInBody struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func SignInController(c *gin.Context) {
+func SignIn(c *gin.Context) {
 	var signInBody SignInBody
 	if err := c.ShouldBind(&signInBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
