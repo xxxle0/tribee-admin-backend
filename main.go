@@ -24,7 +24,9 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	router := gin.Default()
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(gin.Logger())
 	routes.SetupRoutes(router)
 	router.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
