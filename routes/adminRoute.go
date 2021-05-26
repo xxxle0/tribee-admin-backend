@@ -12,6 +12,7 @@ func AdminRoutes(router *gin.Engine, Db *sqlx.DB) {
 	UserRepository := repositories.UserRepository{DB: Db}
 	AdminService := services.AdminService{UserRepository: UserRepository}
 	AdminController := controllers.AdminController{AdminService: AdminService}
+
 	apiV1 := router.Group("/api/v1")
 	{
 		admin := apiV1.Group("/admin")
