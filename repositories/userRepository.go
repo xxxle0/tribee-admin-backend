@@ -8,13 +8,13 @@ import (
 	"github.com/xxxle0/tribee-admin-backend/models"
 )
 
-var Db *sqlx.DB
+type UserRepository struct {
+	DB *sqlx.DB
+}
 
-type UserRepository struct{}
-
-func (repository *UserRepository) FindAll() ([]models.User, error) {
+func (r *UserRepository) FindAll() ([]models.User, error) {
 	result := []models.User{}
-	rows, err := Db.Query(`SELECT * FROM Users`)
+	rows, err := r.DB.Query(`SELECT * FROM Users`)
 	defer rows.Close()
 	for rows.Next() {
 		user := models.User{}
@@ -27,18 +27,18 @@ func (repository *UserRepository) FindAll() ([]models.User, error) {
 	return result, nil
 }
 
-func (repository *UserRepository) FindById(id string) (models.User, error) {
+func (r *UserRepository) FindById(id string) (models.User, error) {
 	user := models.User{}
-	err := Db.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
+	err := r.DB.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
 	if err != nil {
 		return user, errors.Wrap(err, "Get user error")
 	}
 	return user, nil
 }
 
-func (repository *UserRepository) FindByEmail(email string) (models.User, error) {
+func (r *UserRepository) FindByEmail(email string) (models.User, error) {
 	user := models.User{}
-	err := Db.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
+	err := r.DB.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
 	if err != nil {
 		return user, errors.Wrap(err, "Get user error")
 	}

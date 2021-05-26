@@ -14,8 +14,8 @@ type AdminService struct {
 func AdminServiceInit(userRepository repositories.UserRepository) AdminService {
 	return AdminService{UserRepository: userRepository}
 }
-func (adminService *AdminService) SignIn(email string, password string) string {
-	user, err := adminService.UserRepository.FindByEmail(email)
+func (s *AdminService) SignIn(email string, password string) string {
+	user, err := s.UserRepository.FindByEmail(email)
 	if err != nil {
 		log.Fatal("Get user error", err)
 	}
