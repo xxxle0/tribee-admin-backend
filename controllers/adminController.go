@@ -20,13 +20,25 @@ func AdminControllerInit(adminService services.AdminService) AdminController {
 	return AdminController{AdminService: adminService}
 }
 
-func (adminController *AdminController) SignIn(c *gin.Context) {
+func (co *AdminController) SignIn(c *gin.Context) {
 	var signInBody SignInBody
 	if err := c.ShouldBind(&signInBody); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	adminController.AdminService.SignIn(signInBody.Email, signInBody.Password)
+	co.AdminService.SignIn(signInBody.Email, signInBody.Password)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "pong",
+	})
+}
+
+func (co *AdminController) SignUp(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "pong",
+	})
+}
+
+func (co *AdminController) Ping(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "pong",
 	})

@@ -8,21 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
-	"github.com/xxxle0/tribee-admin-backend/repositories"
 	"github.com/xxxle0/tribee-admin-backend/routes"
 	"github.com/xxxle0/tribee-admin-backend/utils"
 )
 
-type DB struct {
-	db *sqlx.DB
-}
-
 func main() {
+	var Db *sqlx.DB
 	config, err := utils.LoadConfig(".")
 	if err != nil {
 		log.Fatal("error load config", err)
 	}
-	repositories.Db, err = sqlx.Connect(config.DBDriver, config.DBSource)
+	Db, err = sqlx.Connect(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -41,6 +37,6 @@ func main() {
 			param.ErrorMessage,
 		)
 	}))
-	routes.SetupRoutes(router)
+	routes.SetupRoutes(router, Db)
 	router.Run(config.ServerPort)
 }
