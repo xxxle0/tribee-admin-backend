@@ -10,7 +10,9 @@ import (
 
 var Db *sqlx.DB
 
-func FindAll() ([]models.User, error) {
+type UserRepository struct{}
+
+func (repository *UserRepository) FindAll() ([]models.User, error) {
 	result := []models.User{}
 	rows, err := Db.Query(`SELECT * FROM Users`)
 	defer rows.Close()
@@ -25,20 +27,20 @@ func FindAll() ([]models.User, error) {
 	return result, nil
 }
 
-func FindById(id string) (models.User, error) {
+func (repository *UserRepository) FindById(id string) (models.User, error) {
 	user := models.User{}
 	err := Db.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
 	if err != nil {
-		return user, errors.Wrap(err, "unable to get hour from db")
+		return user, errors.Wrap(err, "Get user error")
 	}
 	return user, nil
 }
 
-func FindByEmail(email string) (models.User, error) {
+func (repository *UserRepository) FindByEmail(email string) (models.User, error) {
 	user := models.User{}
 	err := Db.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
 	if err != nil {
-		return user, errors.Wrap(err, "unable to get hour from db")
+		return user, errors.Wrap(err, "Get user error")
 	}
 	return user, nil
 }

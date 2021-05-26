@@ -7,14 +7,17 @@ import (
 	"github.com/xxxle0/tribee-admin-backend/utils"
 )
 
-func AdminSerice() string {
-	return "huhu"
+type AdminService struct {
+	UserRepository repositories.UserRepository
 }
 
-func SignIn(email string, password string) string {
-	user, err := repositories.FindByEmail(email)
+func AdminServiceInit(userRepository repositories.UserRepository) AdminService {
+	return AdminService{UserRepository: userRepository}
+}
+func (adminService *AdminService) SignIn(email string, password string) string {
+	user, err := adminService.UserRepository.FindByEmail(email)
 	if err != nil {
-		log.Fatal("huhuhu", err)
+		log.Fatal("Get user error", err)
 	}
 	isPasswordCorrect := utils.CompareHashedPassword(user.Password, password)
 	if isPasswordCorrect != true {
@@ -27,7 +30,7 @@ func SignIn(email string, password string) string {
 	}
 	generatedToken, err := jwtTokenConfig.GenerateJwtToken(email)
 	if err != nil {
-		log.Fatal("Password is not correct")
+		log.Fatal("Generate jwt token error", err)
 	}
 	return generatedToken
 }
