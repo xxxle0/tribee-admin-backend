@@ -9,9 +9,9 @@ import (
 )
 
 func AdminRoutes(router *gin.Engine, Db *sqlx.DB) {
-	UserRepository := repositories.UserRepository{DB: Db}
-	AdminService := services.AdminService{UserRepository: UserRepository}
-	AdminController := controllers.AdminController{AdminService: AdminService}
+	UserRepository := repositories.UserRepositoryInit(Db)
+	AdminService := services.AdminServiceInit(UserRepository)
+	AdminController := controllers.AdminControllerInit(AdminService)
 
 	apiV1 := router.Group("/api/v1")
 	{

@@ -8,12 +8,19 @@ import (
 )
 
 type AdminService struct {
-	UserRepository repositories.UserRepository
+	UserRepository repositories.UserRepositoryI
 }
 
-func AdminServiceInit(userRepository repositories.UserRepository) AdminService {
-	return AdminService{UserRepository: userRepository}
+type AdminServiceI interface {
+	SignIn(email string, password string) string
 }
+
+func AdminServiceInit(userRepository repositories.UserRepositoryI) AdminServiceI {
+	return &AdminService{
+		UserRepository: userRepository,
+	}
+}
+
 func (s *AdminService) SignIn(email string, password string) string {
 	user, err := s.UserRepository.FindByEmail(email)
 	if err != nil {

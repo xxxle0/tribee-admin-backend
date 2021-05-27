@@ -12,6 +12,16 @@ type UserRepository struct {
 	DB *sqlx.DB
 }
 
+type UserRepositoryI interface {
+	FindAll() ([]models.User, error)
+	FindById(id string) (models.User, error)
+	FindByEmail(email string) (models.User, error)
+}
+
+func UserRepositoryInit(db *sqlx.DB) UserRepositoryI {
+	return &UserRepository{DB: db}
+}
+
 func (r *UserRepository) FindAll() ([]models.User, error) {
 	result := []models.User{}
 	rows, err := r.DB.Query(`SELECT * FROM Users`)

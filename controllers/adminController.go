@@ -13,11 +13,17 @@ type SignInBody struct {
 }
 
 type AdminController struct {
-	AdminService services.AdminService
+	AdminService services.AdminServiceI
 }
 
-func AdminControllerInit(adminService services.AdminService) AdminController {
-	return AdminController{AdminService: adminService}
+type AdminControllerI interface {
+	SignIn(c *gin.Context)
+	SignUp(c *gin.Context)
+	Ping(c *gin.Context)
+}
+
+func AdminControllerInit(adminService services.AdminServiceI) AdminControllerI {
+	return &AdminController{AdminService: adminService}
 }
 
 func (co *AdminController) SignIn(c *gin.Context) {
