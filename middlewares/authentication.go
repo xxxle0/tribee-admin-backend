@@ -1,15 +1,15 @@
-package middelwares
+package middlewares
 
 import "github.com/gin-gonic/gin"
 
-type Header struct {
+type RequestHeader struct {
 	Authorization string `header:"Authorization"`
 }
 
 func Authentication(c *gin.Context) {
-	header := Header{}
+	header := RequestHeader{}
 	if err := c.ShouldBindHeader(&header); err != nil {
-		c.JSON(200, err)
+		c.AbortWithStatusJSON(403, "forbidden")
 	}
 	c.JSON(200, gin.H{
 		"header": header,
