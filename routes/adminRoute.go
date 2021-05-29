@@ -20,7 +20,6 @@ func AdminRoutes(router *gin.Engine, Db *sqlx.DB) {
 		{
 			admin.GET("/ping", AdminController.Ping)
 			admin.POST("/sign-in", AdminController.SignIn)
-			admin.POST("/sign-up", AdminController.SignUp)
 			admin.GET("/private/ping", middlewares.Authentication, AdminController.Ping)
 		}
 	}

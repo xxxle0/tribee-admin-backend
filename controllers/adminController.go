@@ -18,7 +18,6 @@ type AdminController struct {
 
 type AdminControllerI interface {
 	SignIn(c *gin.Context)
-	SignUp(c *gin.Context)
 	Ping(c *gin.Context)
 }
 
@@ -32,15 +31,9 @@ func (co *AdminController) SignIn(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	co.AdminService.SignIn(signInBody.Email, signInBody.Password)
+	token := co.AdminService.SignIn(signInBody.Email, signInBody.Password)
 	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
-	})
-}
-
-func (co *AdminController) SignUp(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
+		"token": token,
 	})
 }
 
