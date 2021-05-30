@@ -12,8 +12,10 @@ import (
 	"github.com/xxxle0/tribee-admin-backend/utils"
 )
 
+var Db *sqlx.DB
+
 func main() {
-	var Db *sqlx.DB
+
 	config, err := utils.LoadConfig(".")
 	if err != nil {
 		log.Fatal("error load config", err)

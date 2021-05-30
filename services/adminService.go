@@ -8,15 +8,15 @@ import (
 )
 
 type AdminService struct {
-	UserRepository repositories.UserRepositoryI
+	UserRepository repositories.UserRepository
 }
 
 type AdminServiceI interface {
 	SignIn(email string, password string) string
 }
 
-func AdminServiceInit(userRepository repositories.UserRepositoryI) AdminServiceI {
-	return &AdminService{
+func AdminServiceInit(userRepository repositories.UserRepository) AdminService {
+	return AdminService{
 		UserRepository: userRepository,
 	}
 }

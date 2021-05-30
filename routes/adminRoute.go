@@ -3,17 +3,12 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
-	"github.com/xxxle0/tribee-admin-backend/controllers"
+	"github.com/xxxle0/tribee-admin-backend/containers"
 	"github.com/xxxle0/tribee-admin-backend/middlewares"
-	"github.com/xxxle0/tribee-admin-backend/repositories"
-	"github.com/xxxle0/tribee-admin-backend/services"
 )
 
 func AdminRoutes(router *gin.Engine, Db *sqlx.DB) {
-	UserRepository := repositories.UserRepositoryInit(Db)
-	AdminService := services.AdminServiceInit(UserRepository)
-	AdminController := controllers.AdminControllerInit(AdminService)
-
+	AdminController := containers.InitializeAdminController()
 	apiV1 := router.Group("/api/v1")
 	{
 		admin := apiV1.Group("/admin")

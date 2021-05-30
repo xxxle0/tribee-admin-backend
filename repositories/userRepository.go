@@ -8,9 +8,9 @@ import (
 	"github.com/xxxle0/tribee-admin-backend/models"
 )
 
-type UserRepository struct {
-	DB *sqlx.DB
-}
+var Db *sqlx.DB
+
+type UserRepository struct{}
 
 type UserRepositoryI interface {
 	FindAll() ([]models.User, error)
@@ -18,13 +18,13 @@ type UserRepositoryI interface {
 	FindByEmail(email string) (models.User, error)
 }
 
-func UserRepositoryInit(db *sqlx.DB) UserRepositoryI {
-	return &UserRepository{DB: db}
+func UserRepositoryInit() UserRepository {
+	return UserRepository{}
 }
 
 func (r *UserRepository) FindAll() ([]models.User, error) {
 	result := []models.User{}
-	rows, err := r.DB.Query(`SELECT * FROM Users`)
+	rows, err := Db.Query(`SELECT * FROM Users`)
 	defer rows.Close()
 	for rows.Next() {
 		user := models.User{}
@@ -39,7 +39,7 @@ func (r *UserRepository) FindAll() ([]models.User, error) {
 
 func (r *UserRepository) FindById(id string) (models.User, error) {
 	user := models.User{}
-	err := r.DB.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
+	err := Db.Select(&user, "SELECT * FROM Users WHERE id = ?", id)
 	if err != nil {
 		return user, errors.Wrap(err, "Get user error")
 	}
@@ -48,7 +48,7 @@ func (r *UserRepository) FindById(id string) (models.User, error) {
 
 func (r *UserRepository) FindByEmail(email string) (models.User, error) {
 	user := models.User{}
-	err := r.DB.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
+	err := Db.Select(&user, "SELECT * FROM Users WHERE email = ?", email)
 	if err != nil {
 		return user, errors.Wrap(err, "Get user error")
 	}
